@@ -376,8 +376,10 @@ details p {
 }
 
 .feature-grid,
-.question-grid,
-.split-list {
+.split-list,
+.module-list,
+.tech-grid,
+.code-map {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
@@ -385,8 +387,10 @@ details p {
 }
 
 .feature-grid div,
-.question-grid article,
 .split-list div,
+.module-list article,
+.tech-grid article,
+.code-map article,
 details {
   border: 1px solid var(--line);
   border-radius: 16px;
@@ -394,18 +398,61 @@ details {
   background: var(--panel-strong);
 }
 
-.question-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+.module-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.question-grid strong,
-.question-grid span {
+.module-list strong,
+.module-list span,
+.code-map code,
+.code-map span {
   display: block;
 }
 
-.question-grid span {
+.module-list span,
+.code-map span {
   color: var(--muted);
   margin-top: 6px;
+}
+
+.tech-grid ul {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.flow-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.flow-list span {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 36%, var(--line));
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--text);
+  font-weight: 850;
+}
+
+.code-map {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+code {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 2px 6px;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  color: var(--accent);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.9em;
 }
 
 table {
@@ -530,8 +577,10 @@ summary {
 
   .hero-strip,
   .feature-grid,
-  .question-grid,
   .split-list,
+  .module-list,
+  .tech-grid,
+  .code-map,
   .docs-layout {
     grid-template-columns: 1fr;
   }

@@ -95,10 +95,11 @@
         <section id="docs-print-area" class="docs-layout">
           <nav class="toc" aria-label="Seções da documentação">
             <a href="#overview">Visão geral</a>
-            <a href="#current-state">Situação atual</a>
             <a href="#requirements">Requisitos</a>
             <a href="#manual">Manual de uso</a>
             <a href="#admin">Administração</a>
+            <a href="#technical">Doc técnica</a>
+            <a href="#codebase">Código</a>
             <a href="#faq">FAQ</a>
           </nav>
 
@@ -123,33 +124,6 @@
                   <strong>Governança</strong>
                   <span>Admins controlam acesso, acompanham logs de uso e exportam dados operacionais.</span>
                 </div>
-              </div>
-            </section>
-
-            <section id="current-state" class="doc-card searchable">
-              <p class="section-kicker">Levantamento</p>
-              <h2>Situação atual</h2>
-              <p>
-                Esta seção serve como checklist de descoberta para entender adoção, governança e maturidade do uso de filas
-                em cada projeto Jira.
-              </p>
-              <div class="question-grid">
-                <article>
-                  <strong>Projetos</strong>
-                  <span>Quais projetos estão utilizando o sistema de filas?</span>
-                </article>
-                <article>
-                  <strong>Uso atual</strong>
-                  <span>Como as filas são utilizadas hoje no dia a dia?</span>
-                </article>
-                <article>
-                  <strong>Equipes</strong>
-                  <span>Quais equipes dependem das filas para operar?</span>
-                </article>
-                <article>
-                  <strong>Volume</strong>
-                  <span>Quantas filas existem atualmente por projeto?</span>
-                </article>
               </div>
             </section>
 
@@ -191,6 +165,11 @@
             <section id="manual" class="doc-card searchable">
               <p class="section-kicker">Manual</p>
               <h2>Como usar o Queue Hub</h2>
+              <p>
+                O uso principal do app acontece em duas áreas: a visão operacional de filas e as telas administrativas.
+                Usuários comuns consomem filas, abrem issues e ajustam preferências pessoais. Administradores configuram
+                filas, grupos, permissões e auditoria.
+              </p>
               <ol class="steps-list">
                 <li>
                   <strong>Abrir o app no projeto Jira</strong>
@@ -213,6 +192,20 @@
                   <span>Use Exportar CSV na fila ou nos logs para análise externa.</span>
                 </li>
               </ol>
+              <div class="module-list">
+                <article>
+                  <strong>Fila operacional</strong>
+                  <span>Exibe issues retornadas pelo JQL da fila, com colunas configuradas e abertura direta do chamado.</span>
+                </article>
+                <article>
+                  <strong>Preferências pessoais</strong>
+                  <span>Salva idioma, densidade, fila favorita, sidebar, colunas e seleção atual por usuário.</span>
+                </article>
+                <article>
+                  <strong>Templates</strong>
+                  <span>Cria filas rapidamente a partir de modelos como My work, Unassigned, Waiting customer e Breached SLA.</span>
+                </article>
+              </div>
             </section>
 
             <section id="admin" class="doc-card searchable">
@@ -232,6 +225,117 @@
                   <p>Inclui My work, Unassigned, Waiting customer e Breached SLA para acelerar a configuração.</p>
                 </div>
               </div>
+            </section>
+
+            <section id="technical" class="doc-card searchable">
+              <p class="section-kicker">Engenharia</p>
+              <h2>Documentação técnica</h2>
+              <p>
+                O Queue Hub é um app Atlassian Forge com Custom UI em React. A interface roda no iframe do Forge,
+                conversa com resolvers backend via <code>@forge/bridge</code> e usa APIs Jira/Forge para buscar issues,
+                salvar configuração e registrar eventos.
+              </p>
+              <div class="tech-grid">
+                <article>
+                  <h3>Runtime</h3>
+                  <ul>
+                    <li>Atlassian Forge</li>
+                    <li>Custom UI com Vite</li>
+                    <li>Resolvers Forge em TypeScript</li>
+                    <li>Storage via Forge KVS</li>
+                  </ul>
+                </article>
+                <article>
+                  <h3>Frontend</h3>
+                  <ul>
+                    <li>React 18</li>
+                    <li>TypeScript</li>
+                    <li>CSS próprio do app</li>
+                    <li>Atlaskit icons, lozenge e tokens</li>
+                  </ul>
+                </article>
+                <article>
+                  <h3>Qualidade</h3>
+                  <ul>
+                    <li>Vitest para testes unitários</li>
+                    <li><code>tsc --noEmit</code> para typecheck</li>
+                    <li><code>vite build</code> para build da UI</li>
+                    <li><code>forge lint</code> antes de deploy</li>
+                  </ul>
+                </article>
+              </div>
+
+              <h3>Fluxo de dados</h3>
+              <div class="flow-list">
+                <span>React UI</span>
+                <span>@forge/bridge invoke</span>
+                <span>Forge resolver</span>
+                <span>Jira REST API / Forge KVS</span>
+                <span>Resposta normalizada para a tabela</span>
+              </div>
+            </section>
+
+            <section id="codebase" class="doc-card searchable">
+              <p class="section-kicker">Código</p>
+              <h2>Mapa do código</h2>
+              <div class="code-map">
+                <article>
+                  <code>src/app</code>
+                  <span>Shell da aplicação, rotas internas, i18n, estado global e preferências do usuário.</span>
+                </article>
+                <article>
+                  <code>src/components</code>
+                  <span>Componentes React: sidebar, toolbar, tabela, editor de filas, logs admin e telas de configuração.</span>
+                </article>
+                <article>
+                  <code>src/features/queues</code>
+                  <span>Tipos, API client, seeds, normalização de colunas, JQL e regras de armazenamento de filas.</span>
+                </article>
+                <article>
+                  <code>src/features/issues</code>
+                  <span>Adaptação de issues Jira para linhas de tabela, formatadores e exportação CSV.</span>
+                </article>
+                <article>
+                  <code>src/forge</code>
+                  <span>Resolvers Forge, integração com Jira REST API, storage KVS e permissões.</span>
+                </article>
+                <article>
+                  <code>src/shared</code>
+                  <span>Contratos compartilhados entre frontend e resolver, especialmente payloads de invoke.</span>
+                </article>
+              </div>
+
+              <h3>Comandos principais</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Comando</th>
+                    <th>Uso</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>npm run typecheck</code></td>
+                    <td>Valida TypeScript sem gerar build.</td>
+                  </tr>
+                  <tr>
+                    <td><code>npm test</code></td>
+                    <td>Executa testes unitários com Vitest.</td>
+                  </tr>
+                  <tr>
+                    <td><code>npm run build</code></td>
+                    <td>Gera a Custom UI em <code>static/queues/dist</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><code>forge deploy --environment development</code></td>
+                    <td>Publica uma versão para desenvolvimento.</td>
+                  </tr>
+                  <tr>
+                    <td><code>forge deploy --environment production</code></td>
+                    <td>Publica uma versão para produção.</td>
+                  </tr>
+                </tbody>
+              </table>
             </section>
 
             <section id="faq" class="doc-card searchable">
