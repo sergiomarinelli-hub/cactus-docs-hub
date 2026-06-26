@@ -111,15 +111,15 @@ p {
 }
 
 h1 {
-  margin-bottom: 10px;
-  font-size: clamp(2.1rem, 5vw, 4.2rem);
-  line-height: 0.96;
+  margin-bottom: 8px;
+  font-size: clamp(1.9rem, 3.4vw, 3rem);
+  line-height: 1.02;
 }
 
 h2 {
-  margin-bottom: 14px;
-  font-size: clamp(1.55rem, 3vw, 2.4rem);
-  line-height: 1.08;
+  margin-bottom: 10px;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  line-height: 1.16;
 }
 
 h3 {
@@ -270,7 +270,7 @@ input:focus {
 .content-shell {
   width: min(1500px, 100%);
   margin: 0 auto;
-  padding: 28px;
+  padding: 22px;
 }
 
 .topbar {
@@ -294,8 +294,8 @@ input:focus {
 .hero-strip {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin-bottom: 24px;
+  gap: 12px;
+  margin-bottom: 18px;
 }
 
 .hero-strip article,
@@ -308,7 +308,7 @@ input:focus {
 }
 
 .hero-strip article {
-  padding: 20px;
+  padding: 16px;
 }
 
 .hero-strip strong,
@@ -340,8 +340,8 @@ details p {
 
 .docs-layout {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
-  gap: 18px;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 14px;
   align-items: start;
 }
 
@@ -350,12 +350,12 @@ details p {
   top: 24px;
   display: grid;
   gap: 6px;
-  padding: 12px;
+  padding: 10px;
 }
 
 .toc a {
-  border-radius: 12px;
-  padding: 10px 12px;
+  border-radius: 10px;
+  padding: 8px 10px;
   color: var(--muted);
   font-weight: 800;
   text-decoration: none;
@@ -368,33 +368,35 @@ details p {
 
 .docs-content {
   display: grid;
-  gap: 18px;
+  gap: 14px;
 }
 
 .doc-card {
-  padding: clamp(22px, 3vw, 34px);
+  padding: clamp(18px, 2vw, 24px);
 }
 
 .feature-grid,
+.feature-deck,
 .split-list,
 .module-list,
 .tech-grid,
 .code-map {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 22px;
+  gap: 10px;
+  margin-top: 16px;
 }
 
 .feature-grid div,
+.feature-deck article,
 .split-list div,
 .module-list article,
 .tech-grid article,
 .code-map article,
 details {
   border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 16px;
+  border-radius: 14px;
+  padding: 14px;
   background: var(--panel-strong);
 }
 
@@ -402,14 +404,25 @@ details {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.feature-deck {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.feature-deck article {
+  min-height: 108px;
+}
+
 .module-list strong,
 .module-list span,
+.feature-deck strong,
+.feature-deck span,
 .code-map code,
 .code-map span {
   display: block;
 }
 
 .module-list span,
+.feature-deck span,
 .code-map span {
   color: var(--muted);
   margin-top: 6px;
@@ -417,8 +430,8 @@ details {
 
 .tech-grid ul {
   display: grid;
-  gap: 8px;
-  margin: 12px 0 0;
+  gap: 6px;
+  margin: 10px 0 0;
   padding-left: 18px;
   color: var(--muted);
 }
@@ -426,8 +439,8 @@ details {
 .flow-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 16px;
+  gap: 8px;
+  margin-top: 12px;
 }
 
 .flow-list span {
@@ -435,7 +448,7 @@ details {
   align-items: center;
   border: 1px solid color-mix(in srgb, var(--accent) 36%, var(--line));
   border-radius: 999px;
-  padding: 8px 12px;
+  padding: 7px 10px;
   background: color-mix(in srgb, var(--accent) 10%, transparent);
   color: var(--text);
   font-weight: 850;
@@ -466,7 +479,7 @@ table {
 th,
 td {
   border-bottom: 1px solid var(--line);
-  padding: 14px;
+  padding: 11px 12px;
   text-align: left;
   vertical-align: middle;
 }
@@ -505,7 +518,7 @@ tr:last-child td {
 
 .steps-list {
   display: grid;
-  gap: 14px;
+  gap: 10px;
   padding: 0;
   list-style: none;
   counter-reset: steps;
@@ -513,13 +526,13 @@ tr:last-child td {
 
 .steps-list li {
   display: grid;
-  grid-template-columns: 52px minmax(0, 1fr);
-  column-gap: 14px;
+  grid-template-columns: 44px minmax(0, 1fr);
+  column-gap: 12px;
   row-gap: 4px;
   align-items: start;
   border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 16px;
+  border-radius: 14px;
+  padding: 13px;
   background: var(--panel-strong);
   counter-increment: steps;
 }
@@ -527,14 +540,15 @@ tr:last-child td {
 .steps-list li::before {
   display: grid;
   grid-row: 1 / span 2;
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   place-items: center;
   border-radius: 12px;
   color: #06100e;
   background: var(--accent);
   content: counter(steps);
   font-weight: 900;
+  font-size: 0.9rem;
 }
 
 .steps-list strong,
@@ -577,6 +591,7 @@ summary {
 
   .hero-strip,
   .feature-grid,
+  .feature-deck,
   .split-list,
   .module-list,
   .tech-grid,

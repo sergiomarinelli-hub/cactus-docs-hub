@@ -80,7 +80,7 @@
           <article>
             <span class="metric">Forge app</span>
             <strong>Jira Service Management</strong>
-            <small>Filas inteligentes por projeto, JQL, colunas customizadas e auditoria admin.</small>
+            <small>Filas por JQL, colunas customizadas e auditoria admin.</small>
           </article>
           <article>
             <span class="metric">2 idiomas</span>
@@ -97,7 +97,7 @@
         <section id="docs-print-area" class="docs-layout">
           <nav class="toc" aria-label="Seções da documentação">
             <a href="#overview">Visão geral</a>
-            <a href="#requirements">Requisitos</a>
+            <a href="#features">Funcionalidades</a>
             <a href="#manual">Manual de uso</a>
             <a href="#admin">Administração</a>
             <a href="#technical">Doc técnica</a>
@@ -110,8 +110,8 @@
               <p class="section-kicker">Produto</p>
               <h2>Visão geral</h2>
               <p>
-                O Queue Hub centraliza filas de trabalho dentro do Jira, permitindo que times criem visões por JQL,
-                organizem filas em grupos prioritários e personalizem a forma de consumo por usuário.
+                O Queue Hub centraliza filas de trabalho no Jira. Times criam visões por JQL, organizam filas
+                em grupos prioritários e salvam preferências individuais de uso.
               </p>
               <div class="feature-grid">
                 <div>
@@ -129,53 +129,48 @@
               </div>
             </section>
 
-            <section id="requirements" class="doc-card searchable">
-              <p class="section-kicker">Escopo atual</p>
-              <h2>Requisitos funcionais</h2>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Requisito</th>
-                    <th>Status no Queue Hub</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Permitir criação de filas a partir de JQL</td>
-                    <td><span class="status-pill done">Implementado</span></td>
-                  </tr>
-                  <tr>
-                    <td>Configuração de colunas</td>
-                    <td><span class="status-pill done">Implementado</span></td>
-                  </tr>
-                  <tr>
-                    <td>Criação de grupos prioritários</td>
-                    <td><span class="status-pill done">Implementado</span></td>
-                  </tr>
-                  <tr>
-                    <td>Aplicar filtros, ordenar e buscar chamados</td>
-                    <td><span class="status-pill partial">Parcial</span></td>
-                  </tr>
-                  <tr>
-                    <td>Visualizar filas por SLA</td>
-                    <td><span class="status-pill planned">Planejado</span></td>
-                  </tr>
-                </tbody>
-              </table>
+            <section id="features" class="doc-card searchable">
+              <p class="section-kicker">Produto</p>
+              <h2>Funcionalidades principais</h2>
+              <div class="feature-deck">
+                <article>
+                  <strong>Criação de filas por JQL</strong>
+                  <span>Admins definem consultas JQL para montar filas por projeto, time ou cenário.</span>
+                </article>
+                <article>
+                  <strong>Colunas e densidade personalizadas</strong>
+                  <span>Cada pessoa ajusta colunas, largura, densidade e idioma sem impactar o time.</span>
+                </article>
+                <article>
+                  <strong>Grupos prioritários</strong>
+                  <span>Filas podem ser organizadas no menu lateral por grupos, deixando o trabalho mais escaneável.</span>
+                </article>
+                <article>
+                  <strong>Templates de filas</strong>
+                  <span>Modelos prontos aceleram a criação de filas recorrentes, como My work, Unassigned e Waiting customer.</span>
+                </article>
+                <article>
+                  <strong>Abertura rápida de issues</strong>
+                  <span>Abra chamados pela chave da issue ou com duplo clique na linha.</span>
+                </article>
+                <article>
+                  <strong>Exportações</strong>
+                  <span>Filas e logs podem ser exportados em CSV para análise externa, auditoria ou acompanhamento operacional.</span>
+                </article>
+              </div>
             </section>
 
             <section id="manual" class="doc-card searchable">
               <p class="section-kicker">Manual</p>
               <h2>Como usar o Queue Hub</h2>
               <p>
-                O uso principal do app acontece em duas áreas: a visão operacional de filas e as telas administrativas.
-                Usuários comuns consomem filas, abrem issues e ajustam preferências pessoais. Administradores configuram
-                filas, grupos, permissões e auditoria.
+                O app tem duas áreas principais: visão operacional de filas e administração. Usuários consomem filas
+                e ajustam preferências; admins configuram filas, grupos, permissões e auditoria.
               </p>
               <ol class="steps-list">
                 <li>
                   <strong>Abrir o app no projeto Jira</strong>
-                  <span>Acesse a aba Queue Hub dentro do projeto onde as filas serão acompanhadas.</span>
+                  <span>Acesse a aba Queue Hub dentro do projeto Jira.</span>
                 </li>
                 <li>
                   <strong>Escolher uma fila</strong>
@@ -183,11 +178,11 @@
                 </li>
                 <li>
                   <strong>Criar ou editar fila</strong>
-                  <span>Admins podem criar filas manualmente ou por template, definindo nome, JQL e colunas.</span>
+                  <span>Admins definem nome, JQL, grupos e colunas.</span>
                 </li>
                 <li>
                   <strong>Personalizar visualização</strong>
-                  <span>Defina idioma, densidade, fila favorita, largura de colunas e preferências pessoais.</span>
+                  <span>Defina idioma, densidade, favorita e largura de colunas.</span>
                 </li>
                 <li>
                   <strong>Exportar dados</strong>
@@ -197,15 +192,15 @@
               <div class="module-list">
                 <article>
                   <strong>Fila operacional</strong>
-                  <span>Exibe issues retornadas pelo JQL da fila, com colunas configuradas e abertura direta do chamado.</span>
+                  <span>Exibe issues do JQL com colunas configuradas e abertura direta.</span>
                 </article>
                 <article>
                   <strong>Preferências pessoais</strong>
-                  <span>Salva idioma, densidade, fila favorita, sidebar, colunas e seleção atual por usuário.</span>
+                  <span>Salva idioma, densidade, favorita, sidebar, colunas e seleção atual.</span>
                 </article>
                 <article>
                   <strong>Templates</strong>
-                  <span>Cria filas rapidamente a partir de modelos como My work, Unassigned, Waiting customer e Breached SLA.</span>
+                  <span>Cria filas a partir de modelos recorrentes como My work e Unassigned.</span>
                 </article>
               </div>
             </section>
@@ -234,8 +229,7 @@
               <h2>Documentação técnica</h2>
               <p>
                 O Queue Hub é um app Atlassian Forge com Custom UI em React. A interface roda no iframe do Forge,
-                conversa com resolvers backend via <code>@forge/bridge</code> e usa APIs Jira/Forge para buscar issues,
-                salvar configuração e registrar eventos.
+                chama resolvers via <code>@forge/bridge</code> e usa Jira API/Forge KVS para dados e configurações.
               </p>
               <div class="tech-grid">
                 <article>
