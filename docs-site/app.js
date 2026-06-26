@@ -18,6 +18,15 @@ const logoutButton = document.querySelector("#logout-button");
 const themeToggle = document.querySelector("#theme-toggle");
 const printButton = document.querySelector("#print-button");
 const searchInput = document.querySelector("#doc-search");
+const searchStatus = document.querySelector("#search-status");
+const noResults = document.querySelector("#no-results");
+
+function normalizeSearchText(value) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
 
 function setAuthenticated(authenticated) {
   localStorage.setItem(STORAGE_KEYS.authenticated, authenticated ? "true" : "false");
@@ -45,13 +54,28 @@ function currentTheme() {
 }
 
 function filterDocs(query) {
-  const normalized = query.trim().toLowerCase();
+  const tokens = normalizeSearchText(query)
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
   const cards = [...document.querySelectorAll(".searchable")];
+  let visibleCount = 0;
 
   cards.forEach((card) => {
-    const text = card.textContent?.toLowerCase() ?? "";
-    card.classList.toggle("hidden-by-search", Boolean(normalized) && !text.includes(normalized));
+    const text = normalizeSearchText(card.textContent ?? "");
+    const isVisible = tokens.length === 0 || tokens.every((token) => text.includes(token));
+
+    card.classList.toggle("hidden-by-search", !isVisible);
+    visibleCount += isVisible ? 1 : 0;
   });
+
+  if (noResults) {
+    noResults.hidden = tokens.length === 0 || visibleCount > 0;
+  }
+
+  if (searchStatus) {
+    searchStatus.textContent = tokens.length === 0 ? "" : `${visibleCount} resultado${visibleCount === 1 ? "" : "s"}`;
+  }
 }
 
 loginForm?.addEventListener("submit", (event) => {
@@ -71,6 +95,10 @@ loginForm?.addEventListener("submit", (event) => {
 });
 
 logoutButton?.addEventListener("click", () => {
+  if (searchInput) {
+    searchInput.value = "";
+  }
+  filterDocs("");
   setAuthenticated(false);
 });
 

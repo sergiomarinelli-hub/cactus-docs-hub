@@ -72,6 +72,7 @@
               <span>Buscar</span>
               <input id="doc-search" type="search" placeholder="Busque por JQL, filas, logs..." />
             </label>
+            <span id="search-status" class="search-status" aria-live="polite"></span>
             <button id="print-button" class="primary-button" type="button">Exportar PDF</button>
           </div>
         </header>
@@ -106,6 +107,8 @@
           </nav>
 
           <div class="docs-content">
+            <p id="no-results" class="no-results" hidden>Nenhuma seção encontrada para essa busca.</p>
+
             <section id="overview" class="doc-card searchable">
               <p class="section-kicker">Produto</p>
               <h2>Visão geral</h2>
