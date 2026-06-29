@@ -45,13 +45,13 @@
         </div>
 
         <nav class="app-nav" aria-label="Aplicativos">
-          <button class="app-tab selected" type="button" data-app="queue-hub">
+          <button class="app-tab selected" type="button" data-app="queue-hub" aria-selected="true">
             <span>QH</span>
             <strong>Queue Hub</strong>
           </button>
-          <button class="app-tab" type="button" data-app="placeholder" disabled>
-            <span>+</span>
-            <strong>Próximo app</strong>
+          <button class="app-tab" type="button" data-app="issue-action-hub" aria-selected="false">
+            <span>IA</span>
+            <strong>Issue Action Hub</strong>
           </button>
         </nav>
 
@@ -65,7 +65,7 @@
         <header class="topbar">
           <div>
             <p class="eyebrow">Central de documentação</p>
-            <h1>Queue Hub</h1>
+            <h1 id="app-title">Queue Hub</h1>
           </div>
           <div class="topbar-actions">
             <label class="search-box">
@@ -77,7 +77,7 @@
           </div>
         </header>
 
-        <section class="hero-strip">
+        <section class="hero-strip app-hero" data-app-hero="queue-hub">
           <article>
             <span class="metric">Forge app</span>
             <strong>Jira Service Management</strong>
@@ -95,7 +95,25 @@
           </article>
         </section>
 
-        <section id="docs-print-area" class="docs-layout">
+        <section class="hero-strip app-hero" data-app-hero="issue-action-hub" hidden>
+          <article>
+            <span class="metric">Forge app</span>
+            <strong>Jira issue panel/action</strong>
+            <small>Transições de status, edição de campos e ação modal dentro da issue.</small>
+          </article>
+          <article>
+            <span class="metric">Auditoria</span>
+            <strong>KVS + comentários</strong>
+            <small>Histórico interno, metadados de transição e comentários automáticos opcionais.</small>
+          </article>
+          <article>
+            <span class="metric">JSM</span>
+            <strong>Comentário externo</strong>
+            <small>Resposta pública no portal com fallback para comentário público da issue.</small>
+          </article>
+        </section>
+
+        <section id="docs-print-area" class="docs-layout app-docs" data-docs-app="queue-hub">
           <nav class="toc" aria-label="Seções da documentação">
             <a href="#overview">Visão geral</a>
             <a href="#features">Funcionalidades</a>
@@ -107,7 +125,7 @@
           </nav>
 
           <div class="docs-content">
-            <p id="no-results" class="no-results" hidden>Nenhuma seção encontrada para essa busca.</p>
+            <p class="no-results" data-no-results hidden>Nenhuma seção encontrada para essa busca.</p>
 
             <section id="overview" class="doc-card searchable">
               <p class="section-kicker">Produto</p>
@@ -363,6 +381,311 @@
               <details>
                 <summary>Quando usar templates de filas?</summary>
                 <p>Templates aceleram a criação de filas comuns, como trabalho do usuário atual, itens sem responsável e filas baseadas em espera ou SLA.</p>
+              </details>
+            </section>
+          </div>
+        </section>
+
+        <section class="docs-layout app-docs" data-docs-app="issue-action-hub" hidden>
+          <nav class="toc" aria-label="Seções da documentação">
+            <a href="#iah-overview">Visão geral</a>
+            <a href="#iah-features">Funcionalidades</a>
+            <a href="#iah-manual">Manual de uso</a>
+            <a href="#iah-admin">Administração</a>
+            <a href="#iah-technical">Doc técnica</a>
+            <a href="#iah-codebase">Código</a>
+            <a href="#iah-faq">FAQ</a>
+          </nav>
+
+          <div class="docs-content">
+            <p class="no-results" data-no-results hidden>Nenhuma seção encontrada para essa busca.</p>
+
+            <section id="iah-overview" class="doc-card searchable">
+              <p class="section-kicker">Produto</p>
+              <h2>Visão geral</h2>
+              <p>
+                O Issue Action Hub concentra ações recorrentes da issue em um app Atlassian Forge. Ele aparece no
+                painel da issue e como ação modal, permitindo alterar status por transições do workflow, editar campos
+                disponíveis e publicar comentário externo no Jira Service Management.
+              </p>
+              <div class="feature-grid">
+                <div>
+                  <strong>Ações no contexto da issue</strong>
+                  <span>O app identifica a issue atual pelo contexto do Forge e recarrega dados após cada alteração.</span>
+                </div>
+                <div>
+                  <strong>Execução operacional</strong>
+                  <span>Transições e campos são enviados ao Jira com validação, tratamento de erro e feedback ao usuário.</span>
+                </div>
+                <div>
+                  <strong>Rastro de auditoria</strong>
+                  <span>Registra eventos em Forge KVS e pode criar comentários automáticos de auditoria na issue.</span>
+                </div>
+              </div>
+            </section>
+
+            <section id="iah-features" class="doc-card searchable">
+              <p class="section-kicker">Produto</p>
+              <h2>Funcionalidades principais</h2>
+              <div class="feature-deck">
+                <article>
+                  <strong>Painel e ação modal</strong>
+                  <span>Disponível como <code>jira:issuePanel</code> e <code>jira:issueAction</code>, com modal grande para fluxos de ação.</span>
+                </article>
+                <article>
+                  <strong>Alteração de status</strong>
+                  <span>Lista as transições disponíveis no workflow e executa a transição selecionada pela API do Jira.</span>
+                </article>
+                <article>
+                  <strong>Campos obrigatórios da transição</strong>
+                  <span>Quando o workflow exige campos adicionais, o app exibe o formulário antes de executar novamente.</span>
+                </article>
+                <article>
+                  <strong>Edição de campos</strong>
+                  <span>Usa o <code>editmeta</code> do Jira para montar editores de texto, número, data, seleção, usuário, lista e JSON.</span>
+                </article>
+                <article>
+                  <strong>Responsável operacional</strong>
+                  <span>Quando o assignee é recusado pelo Jira, registra o responsável operacional e tenta atribuir a issue ao usuário técnico do app.</span>
+                </article>
+                <article>
+                  <strong>Comentário externo</strong>
+                  <span>Publica resposta pública no portal JSM e usa comentário público da issue como fallback em cenários permitidos.</span>
+                </article>
+              </div>
+            </section>
+
+            <section id="iah-manual" class="doc-card searchable">
+              <p class="section-kicker">Manual</p>
+              <h2>Como usar o Issue Action Hub</h2>
+              <p>
+                Use o app quando uma issue precisar de uma ação rápida e rastreável: mudar status, preencher campos,
+                responder o cliente ou combinar mais de uma dessas alterações em uma única rodada operacional.
+              </p>
+              <ol class="steps-list">
+                <li>
+                  <strong>Abrir a issue no Jira</strong>
+                  <span>Acesse o painel Issue Action Hub ou a ação Issue Action Hub no menu de ações da issue.</span>
+                </li>
+                <li>
+                  <strong>Atualizar os dados</strong>
+                  <span>Use Atualizar para recarregar status, transições, campos editáveis e permissões retornadas pelo Jira.</span>
+                </li>
+                <li>
+                  <strong>Alterar status</strong>
+                  <span>Escolha a próxima transição. Se houver campos obrigatórios, preencha o formulário exibido.</span>
+                </li>
+                <li>
+                  <strong>Editar um campo</strong>
+                  <span>Selecione um campo editável, informe o valor e salve. Campos não suportados pelo Jira ficam ocultos.</span>
+                </li>
+                <li>
+                  <strong>Publicar comentário externo</strong>
+                  <span>Escreva a mensagem para o cliente e publique como comentário público no portal do Jira Service Management.</span>
+                </li>
+                <li>
+                  <strong>Salvar ações combinadas</strong>
+                  <span>Quando houver mais de uma ação pendente, use Salvar todas as alterações para executar o conjunto.</span>
+                </li>
+              </ol>
+              <div class="module-list">
+                <article>
+                  <strong>Alterar status</strong>
+                  <span>Seleciona transição, valida campos obrigatórios e atualiza a issue no workflow.</span>
+                </article>
+                <article>
+                  <strong>Editar campo</strong>
+                  <span>Atualiza campos editáveis com conversão para o payload esperado pelo Jira.</span>
+                </article>
+                <article>
+                  <strong>Comentário externo</strong>
+                  <span>Envia resposta pública e mantém o autor operacional no corpo da mensagem.</span>
+                </article>
+              </div>
+            </section>
+
+            <section id="iah-admin" class="doc-card searchable">
+              <p class="section-kicker">Admin</p>
+              <h2>Administração e auditoria</h2>
+              <div class="split-list">
+                <div>
+                  <h3>Controle de acesso</h3>
+                  <p>Usuários autorizados podem ajustar grupos, roles de projeto e accountIds usados pela configuração do app.</p>
+                </div>
+                <div>
+                  <h3>Comentários de auditoria</h3>
+                  <p>A configuração permite ativar ou desativar comentários automáticos para transições e alterações de campo.</p>
+                </div>
+                <div>
+                  <h3>Auditoria interna</h3>
+                  <p>Eventos são salvos no Forge KVS por issue, com limite sanitizado entre 1 e 200 registros.</p>
+                </div>
+              </div>
+
+              <h3>Configuração padrão</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Padrão</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Grupos autorizados</td>
+                    <td>Administradores, Service Desk, Operações, administrators, site-admins e jira-administrators.</td>
+                  </tr>
+                  <tr>
+                    <td>Roles de projeto</td>
+                    <td>Administrators e administrator.</td>
+                  </tr>
+                  <tr>
+                    <td>Comentário automático</td>
+                    <td>Ativo por padrão para registrar auditoria na issue.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section id="iah-technical" class="doc-card searchable">
+              <p class="section-kicker">Engenharia</p>
+              <h2>Documentação técnica</h2>
+              <p>
+                O Issue Action Hub é um app Atlassian Forge com UI Kit em React. A interface usa
+                <code>@forge/bridge</code> para chamar resolvers e os resolvers usam Jira REST API, Jira Service
+                Management API e Forge KVS para leitura, escrita e auditoria.
+              </p>
+              <div class="tech-grid">
+                <article>
+                  <h3>Runtime</h3>
+                  <ul>
+                    <li>Atlassian Forge</li>
+                    <li>Node.js 24.x</li>
+                    <li>UI Kit com React 18</li>
+                    <li>Resolver Forge em JavaScript</li>
+                  </ul>
+                </article>
+                <article>
+                  <h3>APIs usadas</h3>
+                  <ul>
+                    <li><code>/rest/api/3/issue</code></li>
+                    <li><code>/rest/api/3/issue/transitions</code></li>
+                    <li><code>/rest/api/3/issue/editmeta</code></li>
+                    <li><code>/rest/servicedeskapi/request/comment</code></li>
+                  </ul>
+                </article>
+                <article>
+                  <h3>Scopes</h3>
+                  <ul>
+                    <li><code>read:jira-work</code></li>
+                    <li><code>write:jira-work</code></li>
+                    <li><code>read:jira-user</code></li>
+                    <li><code>write:servicedesk-request</code></li>
+                    <li><code>storage:app</code></li>
+                  </ul>
+                </article>
+              </div>
+
+              <h3>Fluxo de dados</h3>
+              <div class="flow-list">
+                <span>Issue view</span>
+                <span>Forge React UI</span>
+                <span>@forge/bridge invoke</span>
+                <span>Resolver Forge</span>
+                <span>Jira REST / JSM / Forge KVS</span>
+                <span>Painel recarregado ou modal fechado</span>
+              </div>
+            </section>
+
+            <section id="iah-codebase" class="doc-card searchable">
+              <p class="section-kicker">Código</p>
+              <h2>Mapa do código</h2>
+              <div class="code-map">
+                <article>
+                  <code>manifest.yml</code>
+                  <span>Define os módulos <code>jira:issuePanel</code> e <code>jira:issueAction</code>, runtime, app id e scopes.</span>
+                </article>
+                <article>
+                  <code>src/index.js</code>
+                  <span>Exporta o handler dos resolvers usado pelo Forge.</span>
+                </article>
+                <article>
+                  <code>src/frontend/index.jsx</code>
+                  <span>Interface React/UI Kit, seleção de transições, edição de campos, comentário externo e configuração de acesso.</span>
+                </article>
+                <article>
+                  <code>src/resolvers/index.js</code>
+                  <span>Resolvers, chamadas Jira/JSM, coerção de valores, auditoria, responsável operacional e tratamento de erros.</span>
+                </article>
+                <article>
+                  <code>package.json</code>
+                  <span>Dependências Forge, React e script de lint do projeto.</span>
+                </article>
+                <article>
+                  <code>README.md</code>
+                  <span>Ainda contém o template inicial Forge; esta página é a documentação funcional atual do app.</span>
+                </article>
+              </div>
+
+              <h3>Comandos principais</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Comando</th>
+                    <th>Uso</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>npm run lint</code></td>
+                    <td>Executa ESLint em <code>src/**/*</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><code>forge deploy</code></td>
+                    <td>Publica as alterações do app Forge.</td>
+                  </tr>
+                  <tr>
+                    <td><code>forge install</code></td>
+                    <td>Instala o app em um site Atlassian.</td>
+                  </tr>
+                  <tr>
+                    <td><code>forge tunnel</code></td>
+                    <td>Executa o app localmente para desenvolvimento e depuração.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section id="iah-faq" class="doc-card searchable">
+              <p class="section-kicker">FAQ</p>
+              <h2>Perguntas frequentes</h2>
+              <details open>
+                <summary>Onde o app aparece no Jira?</summary>
+                <p>Ele aparece como painel da issue e também como ação de issue em modal grande.</p>
+              </details>
+              <details>
+                <summary>Quais ações o app executa?</summary>
+                <p>O app altera status por transições do workflow, edita campos liberados pelo Jira e publica comentário externo no JSM.</p>
+              </details>
+              <details>
+                <summary>O que acontece quando a transição exige campos?</summary>
+                <p>O app exibe os campos obrigatórios conhecidos. Se o Jira apontar campos adicionais no erro, o formulário é enriquecido e a pessoa tenta novamente.</p>
+              </details>
+              <details>
+                <summary>Quais tipos de campo são suportados?</summary>
+                <p>Texto, textarea, ADF, número, data, datetime, select, multiselect, lista de strings, usuário e JSON para campos complexos.</p>
+              </details>
+              <details>
+                <summary>Como funciona o responsável operacional?</summary>
+                <p>Se o Jira recusar a atualização do assignee, o app registra o responsável operacional no campo configurado ou no storage interno e tenta usar o usuário técnico como assignee.</p>
+              </details>
+              <details>
+                <summary>Como o comentário externo é publicado?</summary>
+                <p>Primeiro pela API do Jira Service Management. Em erros 400, 403 ou 404, o app tenta criar um comentário público na issue.</p>
+              </details>
+              <details>
+                <summary>Que auditoria é registrada?</summary>
+                <p>Transições, alterações de campo e comentários externos recebem registro no Forge KVS; transições e campos também podem gerar comentário automático na issue.</p>
               </details>
             </section>
           </div>
